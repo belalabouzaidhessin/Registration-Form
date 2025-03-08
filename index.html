@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Submission</title>
+</head>
+<body>
+    <h2>Submit Your Details</h2>
+    <form id="myForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" required><br><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" required><br><br>
+
+        <label for="confirmPassword">Confirm Password:</label>
+        <input type="password" id="confirmPassword" required><br><br>
+
+        <label for="message">Message (optional):</label>
+        <textarea id="message"></textarea><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <p id="response"></p>
+
+    <script>
+        document.getElementById("myForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+
+            const name = document.getElementById("name").value;
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+            const message = document.getElementById("message").value;
+
+            const response = await fetch("http://localhost:5000/submit", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, password, confirmPassword, message })
+            });
+
+            const result = await response.json();
+            document.getElementById("response").textContent = result.error || result.message;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belal's Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(45deg, #8E44AD, #FF69B4);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 400px;
+            padding: 20px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        h2 {
+            color: #6A1B9A;
+            font-size: 24px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #333;
+            display: block;
+            text-align: left;
+            margin-top: 10px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .gender-group,
+        .interests-group {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-start;
+        }
+
+        .gender-group input,
+        .interests-group input {
+            width: auto;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            text-align: left;
+            margin-top: 5px;
+        }
+
+        button {
+            background-color: #8E44AD;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            width: 100%;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 15px;
+        }
+
+        button:hover {
+            background-color: #6A1B9A;
+        }
+
+        .signature {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #666;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Registration Form</h2>
+        <form onsubmit="return validateForm()">
+            <label for="first_name">First Name:</label>
+            <input type="text" id="first_name" name="first_name">
+            <p class="error" id="first_name_error"></p>
+
+            <label for="last_name">Last Name:</label>
+            <input type="text" id="last_name" name="last_name">
+            <p class="error" id="last_name_error"></p>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email">
+            <p class="error" id="email_error"></p>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
+            <p class="error" id="password_error"></p>
+
+            <label for="confirm_password">Confirm Password:</label>
+            <input type="password" id="confirm_password" name="confirm_password">
+            <p class="error" id="confirm_password_error"></p>
+
+            <label>Gender:</label>
+            <div class="gender-group">
+                <input type="radio" name="gender" value="male"> Male
+                <input type="radio" name="gender" value="female"> Female
+                <input type="radio" name="gender" value="other"> Other
+            </div>
+
+            <label for="country">Country:</label>
+            <select id="country" name="country">
+                <option value="">Select your country</option>
+                <option>USA</option>
+                <option>UK</option>
+                <option>India</option>
+                <option>Egypt</option>
+            </select>
+            <p class="error" id="country_error"></p>
+
+            <label>Interests:</label>
+            <div class="interests-group">
+                <input type="checkbox" name="interests" value="reading"> Reading
+                <input type="checkbox" name="interests" value="sports"> Sports
+                <input type="checkbox" name="interests" value="music"> Music
+            </div>
+
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" rows="4"></textarea>
+            <p class="error" id="message_error"></p>
+
+            <button type="submit">Register</button>
+        </form>
+
+        <!-- Personal Mark -->
+        <p class="signature">Designed by Belal Abouzaid Hessin 🚀</p>
+    </div>
+
+    <script>
+        function validateForm() {
+            let isValid = true;
+
+            // Get form values
+            let firstName = document.getElementById("first_name").value.trim();
+            let lastName = document.getElementById("last_name").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let password = document.getElementById("password").value;
+            let confirmPassword = document.getElementById("confirm_password").value;
+            let country = document.getElementById("country").value;
+            let message = document.getElementById("message").value.trim();
+
+            // Clear previous error messages
+            document.getElementById("first_name_error").innerText = "";
+            document.getElementById("last_name_error").innerText = "";
+            document.getElementById("email_error").innerText = "";
+            document.getElementById("password_error").innerText = "";
+            document.getElementById("confirm_password_error").innerText = "";
+            document.getElementById("country_error").innerText = "";
+            document.getElementById("message_error").innerText = "";
+
+            // Validate first name (no numbers allowed)
+            if (!/^[A-Za-z]+$/.test(firstName)) {
+                document.getElementById("first_name_error").innerText = "First name cannot contain numbers!";
+                isValid = false;
+            }
+
+            // Validate last name (no numbers allowed)
+            if (!/^[A-Za-z]+$/.test(lastName)) {
+                document.getElementById("last_name_error").innerText = "Last name cannot contain numbers!";
+                isValid = false;
+            }
+
+            // Validate email (not empty)
+            if (email === "") {
+                document.getElementById("email_error").innerText = "Email cannot be empty!";
+                isValid = false;
+            }
+
+            // Validate password (not empty)
+            if (password === "") {
+                document.getElementById("password_error").innerText = "Password cannot be empty!";
+                isValid = false;
+            }
+
+            // Validate confirm password (must match)
+            if (password !== confirmPassword) {
+                document.getElementById("confirm_password_error").innerText = "Passwords do not match!";
+                isValid = false;
+            }
+
+            // Validate country selection
+            if (country === "") {
+                document.getElementById("country_error").innerText = "Please select a country!";
+                isValid = false;
+            }
+
+            // Validate message (not empty)
+            if (message === "") {
+                document.getElementById("message_error").innerText = "Message cannot be empty!";
+                isValid = false;
+            }
+
+            return isValid; // If any validation fails, form will not submit
+        }
+    </script>
+
+</body>
+
+</html>
